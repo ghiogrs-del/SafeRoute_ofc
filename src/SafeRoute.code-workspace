@@ -1,0 +1,12 @@
+{
+	"folders": [
+		{
+			"path": ".."
+		},
+		{
+			"name": "SafeRouteESP32",
+			"path": "../../../OneDrive/Documentos/PlatformIO/Projects/SafeRouteESP32"
+		}
+	],
+	"settings": {}
+}

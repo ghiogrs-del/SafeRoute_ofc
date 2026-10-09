@@ -1,0 +1,1055 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>SafeRoute</title>
+
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <!-- ============================= -->
+    <!-- CABEÇALHO -->
+    <!-- ============================= -->
+
+    <header>
+
+        <div class="logo">
+            <h1>SafeRoute</h1>
+        </div>
+
+        <div class="system-status" id="systemStatus">
+            <span class="status-dot"></span>
+            <span id="systemStatusText">Sistema conectado</span>
+        </div>
+
+    </header>
+
+
+    <main>
+
+        <!-- ============================= -->
+        <!-- TELA DE AUTENTICAÇÃO -->
+        <!-- ============================= -->
+
+        <section id="authScreen">
+
+            <!-- LOGIN -->
+
+            <div class="auth-card" id="loginCard">
+
+                <h2>Entrar</h2>
+
+                <p class="auth-subtitle">
+                    Acesse o sistema SafeRoute
+                </p>
+
+                <form id="loginForm">
+
+                    <div class="form-group">
+                        <label for="loginEmail">
+                            E-mail
+                        </label>
+
+                        <input
+                            type="email"
+                            id="loginEmail"
+                            required
+                        >
+                    </div>
+
+
+                    <div class="form-group">
+                        <label for="loginPassword">
+                            Senha
+                        </label>
+
+                        <input
+                            type="password"
+                            id="loginPassword"
+                            required
+                        >
+                    </div>
+
+
+                    <button
+                        type="submit"
+                        class="primary-button"
+                    >
+                        Entrar
+                    </button>
+
+                </form>
+
+
+                <button
+                    type="button"
+                    id="showRegisterButton"
+                    class="secondary-button"
+                >
+                    Criar uma conta
+                </button>
+
+            </div>
+
+
+            <!-- CADASTRO -->
+
+            <div
+                class="auth-card"
+                id="registerCard"
+                style="display: none;"
+            >
+
+                <h2>Criar conta</h2>
+
+                <p class="auth-subtitle">
+                    Cadastre-se no SafeRoute
+                </p>
+
+
+                <form id="registerForm">
+
+                    <div class="form-group">
+                        <label for="registerName">
+                            Nome
+                        </label>
+
+                        <input
+                            type="text"
+                            id="registerName"
+                            required
+                        >
+                    </div>
+
+
+                    <div class="form-group">
+                        <label for="registerEmail">
+                            E-mail
+                        </label>
+
+                        <input
+                            type="email"
+                            id="registerEmail"
+                            required
+                        >
+                    </div>
+
+
+                    <div class="form-group">
+                        <label for="registerPassword">
+                            Senha
+                        </label>
+
+                        <input
+                            type="password"
+                            id="registerPassword"
+                            required
+                        >
+                    </div>
+
+
+                    <button
+                        type="submit"
+                        class="primary-button"
+                    >
+                        Criar conta
+                    </button>
+
+                </form>
+
+
+                <button
+                    type="button"
+                    id="backToLoginButton"
+                    class="secondary-button"
+                >
+                    Voltar para o login
+                </button>
+
+            </div>
+
+        </section>
+
+
+        <!-- ============================= -->
+        <!-- TELA DE INSTITUIÇÕES -->
+        <!-- ============================= -->
+
+        <section
+            id="institutionsScreen"
+            style="display: none;"
+        >
+
+            <div class="page-header">
+
+                <div>
+                    <h2>Instituições</h2>
+
+                    <p>
+                        Selecione uma instituição para continuar.
+                    </p>
+                </div>
+
+                <button
+                    type="button"
+                    id="addInstitutionButton"
+                    class="primary-button"
+                >
+                    + Adicionar instituição
+                </button>
+
+            </div>
+
+
+            <div
+                id="institutionsList"
+                class="institutions-list"
+            >
+
+                <!-- Instituições carregadas pelo JavaScript -->
+
+            </div>
+
+        </section>
+
+
+        <!-- ============================= -->
+        <!-- CONFIGURAÇÃO DA EDIFICAÇÃO -->
+        <!-- ============================= -->
+
+        <section
+            id="buildingConfiguration"
+            style="display: none;"
+        >
+
+            <div class="page-header">
+
+                <div>
+
+                    <h2>Configuração da edificação</h2>
+
+                    <p>
+                        Carregue a planta e configure os ambientes
+                        monitorados pelo SafeRoute.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <!-- UPLOAD DA PLANTA -->
+
+            <div
+                id="uploadArea"
+                class="upload-area"
+            >
+
+                <div class="upload-icon">
+                    📐
+                </div>
+
+                <h3>
+                    Carregar planta da edificação
+                </h3>
+
+                <p>
+                    Selecione uma imagem da planta
+                    para começar a configuração.
+                </p>
+
+                <p class="upload-formats">
+                    Formatos aceitos: PNG, JPG e JPEG
+                </p>
+
+
+                <label
+                    for="plantInput"
+                    class="primary-button"
+                >
+                    Selecionar planta
+                </label>
+
+                <input
+                    type="file"
+                    id="plantInput"
+                    accept=".png,.jpg,.jpeg"
+                    hidden
+                >
+
+            </div>
+
+
+            <!-- ÁREA DA PLANTA -->
+
+            <div
+                id="plantWorkspace"
+                class="plant-workspace"
+                style="display: none;"
+            >
+
+                <div class="workspace-header">
+
+                    <div>
+
+                        <h3>
+                            Planta da edificação
+                        </h3>
+
+                        <p>
+                            Clique na planta para adicionar um ambiente.
+                        </p>
+
+                    </div>
+
+
+                    <div class="workspace-actions">
+
+                        <button
+                            type="button"
+                            id="addRoomButton"
+                            class="primary-button"
+                        >
+                            + Adicionar ambiente
+                        </button>
+
+                    </div>
+
+                </div>
+
+
+                <div id="plantContainer" class="plant-container">
+    <div id="plantCanvas" class="plant-stage">
+        <div id="roomOverlays" class="room-overlays"></div>
+    </div>
+</div>
+
+
+                <!-- CONTADOR DE AMBIENTES -->
+
+                <div class="room-counter">
+
+                    <span>
+                        Ambientes configurados:
+                    </span>
+
+                    <span
+                        id="roomCounter"
+                        class="room-counter-value"
+                    >
+                        0
+                    </span>
+
+                    <span
+                        id="roomCounterBadge"
+                        class="room-counter-badge"
+                    >
+                        0
+                    </span>
+
+                </div>
+
+
+                <!-- LISTA DE AMBIENTES -->
+
+                <div class="rooms-section">
+
+                    <div class="section-header">
+
+                        <div>
+
+                            <h3>
+                                Ambientes
+                            </h3>
+
+                            <p>
+                                Configure os ambientes da edificação.
+                            </p>
+
+                        </div>
+
+                    </div>
+
+
+                    <div
+                        id="roomsList"
+                        class="rooms-list"
+                    >
+
+                        <!-- Ambientes inseridos pelo JavaScript -->
+
+                    </div>
+
+                </div>
+
+
+                <!-- CONTINUAR -->
+
+                <div class="configuration-footer">
+
+                    <button
+                        type="button"
+                        id="continueButton"
+                        class="primary-button"
+                    >
+                        Continuar para o monitoramento
+                    </button>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- ============================= -->
+        <!-- PAINEL DE MONITORAMENTO -->
+        <!-- ============================= -->
+
+        <section
+            id="monitoringDashboard"
+            style="display: none;"
+        >
+
+            <div class="dashboard-header">
+
+                <div>
+
+                    <h2 id="dashboardBuildingName">
+                        Painel de Monitoramento
+                    </h2>
+
+                    <p>
+                        Acompanhamento em tempo real da edificação.
+                    </p>
+
+                </div>
+
+
+                <button
+                    type="button"
+                    id="backToBuildingButton"
+                    class="secondary-button"
+                >
+                    ← Voltar para configuração
+                </button>
+
+            </div>
+
+
+            <!-- ============================= -->
+            <!-- CARDS DE RESUMO -->
+            <!-- ============================= -->
+
+            <div class="dashboard-summary">
+
+                <div class="dashboard-card">
+
+                    <div class="dashboard-card-title">
+                        Pessoas na edificação
+                    </div>
+
+                    <div
+                        id="totalPeople"
+                        class="dashboard-card-value"
+                    >
+                        0
+                    </div>
+
+                </div>
+
+
+                <div class="dashboard-card">
+
+                    <div class="dashboard-card-title">
+                        Ambientes monitorados
+                    </div>
+
+                    <div
+                        id="monitoredRooms"
+                        class="dashboard-card-value"
+                    >
+                        0
+                    </div>
+
+                </div>
+
+
+                <div class="dashboard-card">
+
+                    <div class="dashboard-card-title">
+                        Alertas ativos
+                    </div>
+
+                    <div
+                        id="activeAlerts"
+                        class="dashboard-card-value"
+                    >
+                        0
+                    </div>
+
+                </div>
+
+
+                <div class="dashboard-card">
+
+                    <div class="dashboard-card-title">
+                        Dispositivos online
+                    </div>
+
+                    <div
+                        id="onlineDevices"
+                        class="dashboard-card-value"
+                    >
+                        0
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- ============================= -->
+            <!-- STATUS GERAL -->
+            <!-- ============================= -->
+
+            <div class="dashboard-system-status">
+
+                <div>
+
+                    <span class="status-dot"></span>
+
+                    <strong>
+                        Status do sistema:
+                    </strong>
+
+                    <span id="dashboardSystemStatus">
+                        Operacional
+                    </span>
+
+                </div>
+
+            </div>
+
+
+            <!-- ============================= -->
+            <!-- PLANTA + ALERTAS -->
+            <!-- ============================= -->
+
+            <div class="dashboard-main-grid">
+
+
+                <!-- PLANTA -->
+
+                <div class="dashboard-panel">
+
+                    <div class="dashboard-panel-header">
+
+                        <div>
+
+                            <h3>
+                                Monitoramento da planta
+                            </h3>
+
+                            <p>
+                                Visualização dos ambientes e seus respectivos estados.
+                            </p>
+
+                        </div>
+
+                    </div>
+
+
+                    <div
+                        id="dashboardPlantContainer"
+                        class="dashboard-plant-container"
+                    >
+
+                        <div
+                            id="dashboardPlantPlaceholder"
+                            class="dashboard-plant-placeholder"
+                        >
+
+                            <p>
+                                A planta da edificação aparecerá aqui.
+                            </p>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <!-- ALERTAS -->
+
+                <div class="dashboard-panel">
+
+                    <div class="dashboard-panel-header">
+
+                        <div>
+
+                            <h3>
+                                Alertas
+                            </h3>
+
+                            <p>
+                                Ocorrências detectadas pelo sistema.
+                            </p>
+
+                        </div>
+
+
+                        <span
+                            id="alertsCountBadge"
+                            class="alerts-count-badge"
+                        >
+                            0
+                        </span>
+
+                    </div>
+
+
+                    <div
+                        id="alertsList"
+                        class="alerts-list"
+                    >
+
+                        <div class="empty-state">
+
+                            <p>
+                                Nenhum alerta ativo.
+                            </p>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- ============================= -->
+            <!-- AMBIENTES MONITORADOS -->
+            <!-- ============================= -->
+
+            <div class="dashboard-panel">
+
+                <div class="dashboard-panel-header">
+
+                    <div>
+
+                        <h3>
+                            Ambientes monitorados
+                        </h3>
+
+                        <p>
+                            Situação atual de cada ambiente.
+                        </p>
+
+                    </div>
+
+
+                    <span id="dashboardRoomCount">
+                        0 ambientes
+                    </span>
+
+                </div>
+
+
+                <div
+                    id="monitoredRoomsList"
+                    class="monitored-rooms-list"
+                >
+
+                    <!-- Ambientes carregados pelo JavaScript -->
+
+                </div>
+
+            </div>
+
+
+            <!-- ============================= -->
+            <!-- INFORMAÇÕES DE CONEXÃO -->
+            <!-- ============================= -->
+
+            <div class="dashboard-connection-info">
+
+                <div>
+
+                    <strong>
+                        Conexão:
+                    </strong>
+
+                    <span id="dashboardConnectionStatus">
+                        Aguardando conexão...
+                    </span>
+
+                </div>
+
+
+                <div>
+
+                    <strong>
+                        Última atualização:
+                    </strong>
+
+                    <span id="dashboardLastUpdate">
+                        --
+                    </span>
+
+                </div>
+
+            </div>
+
+        </section>
+
+    </main>
+
+
+    <!-- ============================= -->
+    <!-- MODAL DE CONFIGURAÇÃO DO AMBIENTE -->
+    <!-- ============================= -->
+
+    <div
+        id="roomModal"
+        class="modal"
+        style="display: none;"
+    >
+
+        <div class="modal-content">
+
+            <div class="modal-header">
+
+                <div>
+
+                    <h2>
+                        Configurar ambiente
+                    </h2>
+
+                    <p>
+                        Defina as características e os dispositivos do ambiente.
+                    </p>
+
+                </div>
+
+
+                <button
+                    type="button"
+                    id="closeModalButton"
+                    class="close-modal-button"
+                >
+                    ×
+                </button>
+
+            </div>
+
+
+            <!-- NOME -->
+
+            <div class="form-group">
+
+                <label for="roomNameInput">
+                    Nome do ambiente
+                </label>
+
+                <input
+                    type="text"
+                    id="roomNameInput"
+                    placeholder="Ex.: Sala 01"
+                >
+
+            </div>
+
+
+            <!-- TIPO -->
+
+            <div class="form-group">
+
+                <label for="roomTypeInput">
+                    Tipo do ambiente
+                </label>
+
+                <select id="roomTypeInput">
+
+                    <option value="">
+                        Selecione
+                    </option>
+
+                    <option value="sala">
+                        Sala
+                    </option>
+
+                    <option value="laboratorio">
+                        Laboratório
+                    </option>
+
+                    <option value="corredor">
+                        Corredor
+                    </option>
+
+                    <option value="banheiro">
+                        Banheiro
+                    </option>
+
+                    <option value="escada">
+                        Escada
+                    </option>
+
+                    <option value="elevador">
+                        Elevador
+                    </option>
+
+                    <option value="outro">
+                        Outro
+                    </option>
+
+                </select>
+
+            </div>
+
+
+            <!-- MONITORAMENTO -->
+
+            <div class="monitoring-box">
+
+                <div class="monitoring-box-header">
+
+                    <div>
+
+                        <strong>
+                            Monitorar ambiente
+                        </strong>
+
+                        <p>
+                            Ative para receber dados dos sensores em tempo real.
+                        </p>
+
+                    </div>
+
+
+                    <label class="switch">
+
+                        <input
+                            type="checkbox"
+                            id="roomMonitoringInput"
+                        >
+
+                        <span class="slider"></span>
+
+                    </label>
+
+                </div>
+
+            </div>
+
+
+            <!-- DISPOSITIVO -->
+
+            <div
+                id="deviceGroup"
+                class="form-group"
+                style="display: none;"
+            >
+
+                <label for="deviceInput">
+                    Dispositivo
+                </label>
+
+                <select id="deviceInput">
+
+                    <option value="">
+                        Selecione um dispositivo
+                    </option>
+
+                </select>
+
+            </div>
+
+
+            <!-- SENSOR DE ENTRADA -->
+
+            <div
+                id="entrySensorGroup"
+                class="form-group"
+                style="display: none;"
+            >
+
+                <label for="entrySensorInput">
+                    Sensor de entrada
+                </label>
+
+                <select id="entrySensorInput">
+
+                    <option value="E18-D80NK">
+                        E18-D80NK
+                    </option>
+
+                </select>
+
+            </div>
+
+
+            <!-- SENSOR DE SAÍDA -->
+
+            <div
+                id="exitSensorGroup"
+                class="form-group"
+                style="display: none;"
+            >
+
+                <label for="exitSensorInput">
+                    Sensor de saída
+                </label>
+
+                <select id="exitSensorInput">
+
+                    <option value="E18-D80NK">
+                        E18-D80NK
+                    </option>
+
+                </select>
+
+            </div>
+
+
+            <!-- SENSOR DE FUMAÇA -->
+
+            <div
+                id="smokeSensorGroup"
+                class="form-group"
+                style="display: none;"
+            >
+
+                <label for="smokeSensorInput">
+                    Sensor de fumaça/gases
+                </label>
+
+                <select id="smokeSensorInput">
+
+                    <option value="FC-22">
+                        FC-22
+                    </option>
+
+                </select>
+
+            </div>
+
+
+            <!-- STATUS -->
+
+            <div class="form-group">
+
+                <label>
+                    Status inicial do ambiente
+                </label>
+
+
+                <div class="status-options">
+
+                    <label class="status-option">
+
+                        <input
+                            type="radio"
+                            name="roomStatus"
+                            value="normal"
+                            checked
+                        >
+
+                        <span class="status-option-normal">
+                            Normal
+                        </span>
+
+                    </label>
+
+
+                    <label class="status-option">
+
+                        <input
+                            type="radio"
+                            name="roomStatus"
+                            value="atencao"
+                        >
+
+                        <span class="status-option-attention">
+                            Atenção
+                        </span>
+
+                    </label>
+
+
+                    <label class="status-option">
+
+                        <input
+                            type="radio"
+                            name="roomStatus"
+                            value="perigo"
+                        >
+
+                        <span class="status-option-danger">
+                            Perigo
+                        </span>
+
+                    </label>
+
+                </div>
+
+            </div>
+
+
+            <!-- RODAPÉ DO MODAL -->
+
+            <div class="modal-footer">
+
+                <button
+                    type="button"
+                    id="deleteRoomButton"
+                    class="danger-button"
+                >
+                    Excluir ambiente
+                </button>
+
+
+                <div
+                    style="display: flex; gap: 10px; margin-left: auto;"
+                >
+
+                    <button
+                        type="button"
+                        id="cancelModalButton"
+                        class="secondary-button"
+                    >
+                        Cancelar
+                    </button>
+
+
+                    <button
+                        type="button"
+                        id="saveRoomButton"
+                        class="primary-button"
+                    >
+                        Salvar ambiente
+                    </button>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- ============================= -->
+    <!-- JAVASCRIPT -->
+    <!-- ============================= -->
+
+    <script src="script.js"></script>
+
+</body>
+</html>
